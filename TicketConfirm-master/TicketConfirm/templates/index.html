@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+label{
+
+
+    color: white;
+}
+input[type=text], select, textarea {
+    width: 200px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    width: 145px;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 60px 0px;
+    cursor: pointer;
+}
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+
+}
+#bookingdate{
+     
+     margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    width: 143px;
+}
+#doj{
+margin-top: 10px;
+    margin-bottom: 10px;
+height: 30px;
+width: 143px;
+}
+
+.container {
+    background-size:cover;
+    background-image: url({{url_for('static',filename='train3.jpg')}});
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 100px;
+   display: flex;
+}
+
+#one{
+    width: 25%;
+}
+#two{
+    width: 25%;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="container">
+ 
+
+<div  id="one"> 
+  <form onsubmit="return false;">
+    <label for="tname">Train Number</label>
+    <br/>
+    <input type="text" id="tname" name="trainnumber"  placeholder="Train Number">
+    <br/>
+   
+    <label for="class">Class</label>
+    <br/>
+    <select id="class" name="class">
+      <option value="0">3A</option>
+      <option value="1">2A</option>
+      <option value="2">1A</option>
+       <option value="3">SL</option>
+      <option value="4">CC</option>
+      <option value="5">EC</option>
+      <option value="6">2S</option>
+    </select>
+<br/>
+    <label for="from">FROM</label>
+     <br/>
+    <input type="text" id="from" name="from" placeholder="Type The Staion Code">
+      <br/>
+    <label for="to">TO</label>
+     <br/>
+    <input type="text" id="to" name="to" placeholder="Type The Staion Code">
+
+ <br/>
+ 
+
+    <label for="quota">QUOTA</label>
+     <br/>
+    <select id="quota" name="quota">
+      <option value="0">General Quota</option>
+      <option value="1">Ladies Quota</option>
+      <option value="2">Head quarters/high official Quota</option>
+      <option value="3">Defence Quota</option>
+      <option value="4">Parliament house Quota</option>
+      <option value="5">Foreign Tourist Quota</option>
+      <option value="6">Duty Pass Quota</option>
+      <option value="7">Tatkal Quota</option>
+      <option value="8">Premium Tatkal Quota</option>
+      <option value="9">Physically Handicapped Quota</option>
+      <option value="10">Railway Employee Staff on Duty for the train</option>
+      
+    </select>
+<br/>
+      <label for="waitnum">WAITING NUMBER</label>
+       <br/>
+    <input type="text" id="waitnum" name="waitnum" placeholder="Type Your Waiting Number">
+<br/>
+
+
+
+    
+  </form>
+
+</div>
+<div id="two">
+      <label for="bookingdate"> BOOKING DATE</label>
+      <br/>
+      <input id="bookingdate" type="date" value="2018-01-13"/>
+<br/>
+        <label for="doj"> DATE OF JOURNEY</label>
+        <br/>
+        <input id="doj" type="date" value="2018-01-13"/>
+        <br/>
+  
+  <button class="button" type="submit" onclick="getValue();">Submit</button>
+
+</div>    
+
+
+</div>
+
+<script>
+function getValue() {
+
+    var tname = document.getElementById("tname").value;
+        var classs = document.getElementById("class").value;
+        var from = document.getElementById("from").value.toUpperCase();
+        var to = document.getElementById("to").value.toUpperCase();
+        var quota = document.getElementById("quota").value;
+        var waitnum = document.getElementById("waitnum").value;
+        var bookingdate = document.getElementById("bookingdate").value;
+        var doj = document.getElementById("doj").value;
+        var date=bookingdate.split("-");
+        var book_day=date[2];
+        var book_month=date[1];
+        var book_year=date[0];
+        date=doj.split("-");
+        var doj_day=date[2];
+        var doj_month=date[1];
+        var doj_year=date[0];
+        
+
+//   alert('here');
+if (tname.length < 1 || classs.length < 1||to.length < 1 ||from.length < 1 ||quota.length < 1 ||waitnum.length < 1 ||bookingdate.length < 1 ||doj.length < 1) {
+        alert('Please Fill The Inputs');
+        //alert('Username must contain at least 3 characters');
+}else if(isNaN(tname)){
+ alert('Please Enter Valid Number');
+
+}else if(isNaN(waitnum)){
+ alert('Please Enter Valid Waiting Number');
+
+}else if(to.length >4 ||from.length >4){
+alert('Please Enter Valid Station Code');
+}else if(tname>11000||tname<10000){
+alert('Train Number between 10000 to 11000 are only allowed!');
+}
+
+else{
+    // data=tname+" "+classs+" "++to+" "+quota+" "+waitnum+" "+bookingdate+" "+doj;
+
+var data=new Array(tname,classs,from,to,doj_day,doj_month,doj_year,quota,book_day,book_month,book_year,waitnum);
+alert(data);
+    //var csv = 'TrainNo.,Class,from,to,quota,waitnum,bookingdate,doj\n';
+
+            csv = data.join(',');
+          
+    
+ 
+    console.log(csv);
+  
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'test.csv';
+    hiddenElement.click();
+     // alert(csv);
+}
+}
+
+
+
+
+ 
+</script>
+
+</body>
+</html>
